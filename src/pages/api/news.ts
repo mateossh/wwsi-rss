@@ -1,9 +1,10 @@
 import { JSDOM } from 'jsdom';
+import { DateTime } from 'luxon';
 
 type FeedItem = {
   title?: string,
   description?: string,
-  pubDate?: number,
+  pubDate?: number | string,
   link: '',
 }
 
@@ -37,8 +38,13 @@ export async function GET() {
   news.forEach(item => {
     const title = item.querySelector('.news_title')?.textContent || '';
     const description = item.querySelector('.news_content')?.textContent || '';
-    // const pubDate = item.querySelector('.news_podpis')?.textContent;
-    const pubDate = Date.now();
+
+    const date = item.querySelector('.news_podpis')?.textContent;
+    const dateStr = date!.split(' ')[1];
+    const timeZone = 'Europe/Warsaw';
+
+    const parsedDate = DateTime.fromFormat(dateStr, 'dd-MM-yyyy', { zone: timeZone });
+    const pubDate = parsedDate.toISODate()!;
 
     items.push({ title, pubDate, description, link: '' });
   });
