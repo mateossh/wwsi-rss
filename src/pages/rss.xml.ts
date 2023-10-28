@@ -1,8 +1,11 @@
 import rss from '@astrojs/rss';
+import type { APIContext } from 'astro';
 
-export async function GET() {
-  // TODO: ten URL trzeba generować
-  const items = await (await fetch('http://localhost:4321/api/news')).json();
+
+export async function GET({ request }: APIContext) {
+  const { origin } = new URL(request.url);
+
+  const items = await (await fetch(`${origin}/api/news`)).json();
 
   return rss({
     title: 'Komunikaty WWSI (ale lepsze)',
