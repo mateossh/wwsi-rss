@@ -1,3 +1,5 @@
+import { kv } from '@vercel/kv';
+
 import { JSDOM } from 'jsdom';
 import { DateTime } from 'luxon';
 
@@ -9,7 +11,9 @@ type FeedItem = {
 }
 
 export async function GET() {
-  const cookie = 'APPSESSID=tucookiezprzegladarki';
+  const appsessid = await kv.get('cookie');
+
+  const cookie = `APPSESSID=${appsessid}`;
   const url = 'https://student.wwsi.edu.pl/info';
 
   const headers = new Headers({
