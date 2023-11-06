@@ -16,7 +16,7 @@ export async function GET({ request }: APIContext) {
   return new Response(rssString, {
 		headers: {
 			'Content-Type': 'application/xml',
-      'Cache-Control': 'public, s-maxage=1800',
+      'Cache-Control': 'public, s-maxage=600',
 		},
 	});
 }
