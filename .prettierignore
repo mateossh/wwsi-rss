@@ -1,0 +1,5 @@
+.next/
+.vscode/
+
+pnpm-lock.yaml
+README.md
