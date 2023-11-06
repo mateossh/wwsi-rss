@@ -10,6 +10,8 @@ type FeedItem = {
   link: '',
 }
 
+export const runtime = 'edge';
+
 export async function GET() {
   const appsessid = await kv.get('cookie');
 
