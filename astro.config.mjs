@@ -1,11 +1,13 @@
 import { defineConfig } from 'astro/config';
 import tailwind from "@astrojs/tailwind";
 
-import vercelEdge from "@astrojs/vercel/edge";
+import vercel from "@astrojs/vercel/serverless";
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind()],
   output: "server",
-  adapter: vercelEdge()
+  adapter: vercel({
+    edgeMiddleware: true,
+  })
 });
