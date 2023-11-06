@@ -3,11 +3,13 @@ import { kv } from '@vercel/kv';
 import { JSDOM } from 'jsdom';
 import { DateTime } from 'luxon';
 
+import { randomBytes } from 'crypto';
+
 type FeedItem = {
   title?: string,
   description?: string,
   pubDate?: number | string,
-  link: '',
+  link: string,
 }
 
 export const runtime = 'edge';
@@ -52,7 +54,9 @@ export async function GET() {
     const parsedDate = DateTime.fromFormat(dateStr, 'dd-MM-yyyy', { zone: timeZone });
     const pubDate = parsedDate.toISODate()!;
 
-    items.push({ title, pubDate, description, link: '' });
+    const link = `https://student.wwsi.edu.pl/non-existed-link/info#${randomBytes(12).toString('hex')}`;
+
+    items.push({ title, pubDate, description, link });
   });
 
   const responseHeaders = new Headers({
