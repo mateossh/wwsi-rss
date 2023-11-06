@@ -56,7 +56,8 @@ export async function GET() {
   });
 
   const responseHeaders = new Headers({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Cache-Control': 'public, s-maxage=1800',
   })
   
   return new Response(JSON.stringify(items), { headers: responseHeaders });
