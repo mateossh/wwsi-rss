@@ -1,4 +1,5 @@
 ---
+import CopyIcon from '@astropub/icons/Copy';
 import Layout from '../layouts/Layout.astro';
 
 const RSSlink = `${Astro.request.url.toString()}rss.xml`
@@ -21,8 +22,10 @@ const RSSlink = `${Astro.request.url.toString()}rss.xml`
 				class="inline-flex items-center justify-center whitespace-nowrap rounded-md 
 				text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1
 				 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 
-				 bg-slate-100 text-zinc-950 shadow hover:bg-slate-100/90 h-9 px-4 py-2"
-				>kopiuj</button>
+				 bg-slate-100 text-zinc-950 shadow hover:bg-slate-100/90 h-9 px-3 py-2"
+				>
+					<CopyIcon size="16" />
+				</button>
 			</div>
 		</div>
 
@@ -30,7 +33,17 @@ const RSSlink = `${Astro.request.url.toString()}rss.xml`
 			Dane pobierane są ze strony uczelni co 30 minut.
 		</p>
 
-		<footer class="my-16 text-[#a1a1a9] text-sm text-center">Autor: Mateusz Ż</footer>
+		<footer class="my-16 text-zinc-400 text-sm text-center">
+			Autor: 
+			<a
+				class="underline underline-offset-4 hover:text-zinc-400/90"
+				href="https://github.com/mateossh"
+				rel="noopener"
+				target="_blank"
+			>
+				Mateusz Ż
+			</a>
+		</footer>
 	</main>
 </Layout>
 
@@ -38,8 +51,6 @@ const RSSlink = `${Astro.request.url.toString()}rss.xml`
 	const button = document.querySelector('#copy-link-btn');
 
 	button?.addEventListener('click', ()=> {
-		// navigator.clipboard.writeText();
-
-		alert('clicked');
+		navigator.clipboard.writeText(`${window.location.origin}/rss.xml`);
 	});
 </script>
