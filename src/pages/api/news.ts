@@ -1,8 +1,5 @@
 import { kv } from '@vercel/kv';
-
 import { JSDOM } from 'jsdom';
-import { DateTime } from 'luxon';
-
 import { randomBytes } from 'crypto';
 
 type FeedItem = {
@@ -19,6 +16,7 @@ export async function GET() {
 
   const cookie = `APPSESSID=${appsessid}`;
   const url = 'https://student.wwsi.edu.pl/info';
+  const rssUrl = 'https://student.wwsi.edu.pl/rss.xml';
 
   const headers = new Headers({
     Cookie: cookie,
@@ -35,6 +33,16 @@ export async function GET() {
     console.error('error while requesting data from WWSI');
   }
 
+  const schoolrssResponse = await fetch(rssUrl);
+  if (!schoolrssResponse.ok) {
+    console.error("error while requesting data from WWSI's RSS");
+  }
+
+  const rssText = await schoolrssResponse.text();
+
+  const schoolrssDom = new JSDOM(rssText);
+  const schoolrssDoc = schoolrssDom.window.document;
+
   const html = await response.text();
 
   const dom = new JSDOM(html);
@@ -43,22 +51,21 @@ export async function GET() {
   const news = document.querySelectorAll('.news_box');
   const items: FeedItem[] = [];
 
-  news.forEach((item) => {
+  news.forEach((item, index) => {
     const title = item.querySelector('.news_title')?.textContent || '';
     const description = item.querySelector('.news_content')?.textContent || '';
 
-    const date = item.querySelector('.news_podpis')?.textContent;
-    const dateStr = date!.split(' ')[1];
-    const timeZone = 'Europe/Warsaw';
+    const dataFromRss = schoolrssDoc.querySelector(
+      `item:nth-of-type(${index + 1})`,
+    );
 
-    const parsedDate = DateTime.fromFormat(dateStr, 'dd-MM-yyyy', {
-      zone: timeZone,
-    });
-    const pubDate = parsedDate.toISODate()!;
+    const pubDate = dataFromRss?.querySelector('pubDate')?.textContent!; // heh
 
-    const link = `https://student.wwsi.edu.pl/non-existed-link/info#${randomBytes(
-      12,
-    ).toString('hex')}`;
+    // NOTE: jsdom gives this weird output and the only way to retrieve link
+    //       is "black magic"
+    // const link = dataFromRss?.querySelector('link')?.innerHTML!;
+
+    const link = dataFromRss?.innerHTML.split('<link>')[1].split('</item>')[0]!;
 
     items.push({ title, pubDate, description, link });
   });

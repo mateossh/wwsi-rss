@@ -22,7 +22,6 @@
     "@vercel/kv": "^0.2.3",
     "astro": "^3.3.3",
     "jsdom": "^22.1.0",
-    "luxon": "^3.4.3",
     "tailwindcss": "^3.0.24",
     "typescript": "^5.2.2"
   },
