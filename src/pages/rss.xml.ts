@@ -7,7 +7,7 @@ export async function GET({ request }: APIContext) {
   const items = await (await fetch(`${origin}/api/news`)).json();
 
   const rssString = await getRssString({
-    title: 'Komunikaty WWSI (ale lepsze)',
+    title: 'WWSI - lepszy RSS',
     description: 'Komunikaty - Studencki Panel Informacyjny',
     site: 'https://student.wwsi.edu.pl/info',
     items,
