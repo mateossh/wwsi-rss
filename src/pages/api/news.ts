@@ -63,8 +63,8 @@ export async function GET() {
 
     // NOTE: jsdom gives this weird output and the only way to retrieve link
     //       is "black magic"
-    // const link = dataFromRss?.querySelector('link')?.innerHTML!;
 
+    // const link = dataFromRss?.querySelector('link')?.innerHTML!;
     const link = dataFromRss?.innerHTML.split('<link>')[1].split('</item>')[0]!;
 
     items.push({ title, pubDate, description, link });
@@ -72,8 +72,11 @@ export async function GET() {
 
   const responseHeaders = new Headers({
     'Content-Type': 'application/json',
-    'Cache-Control': 'public, s-maxage=1800',
   });
+
+  if (items.length !== 0) {
+    responseHeaders.set('Cache-Control', 'public, s-maxage=1800');
+  }
 
   return new Response(JSON.stringify(items), { headers: responseHeaders });
 }

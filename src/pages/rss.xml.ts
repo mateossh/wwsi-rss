@@ -13,6 +13,10 @@ export async function GET({ request }: APIContext) {
     items,
   });
 
+  if (items.length === 0) {
+    return new Response('', { status: 500 });
+  }
+
   return new Response(rssString, {
     headers: {
       'Content-Type': 'application/xml',
