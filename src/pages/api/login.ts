@@ -72,7 +72,7 @@ export async function POST({ request }: APIContext) {
     return new Response(JSON.stringify(err), { status: 400 });
   }
 
-  return new Response('');
+  return new Response('OKok');
 }
 
 export async function GET({ request }: APIContext) {
