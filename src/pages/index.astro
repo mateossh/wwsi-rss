@@ -2,55 +2,74 @@
 import CopyIcon from '@astropub/icons/Copy';
 import Layout from '../layouts/Layout.astro';
 
-const RSSlink = `${Astro.request.url.toString()}rss.xml`
+const RSSlink = `${Astro.request.url.toString()}rss.xml`;
 ---
 
 <Layout title="WWSI RSS">
-	<main class="p-16 m-auto max-w-[calc(100% - 2rem)] w-[800px]">
-		<h1 class="text-6xl font-bold text-center mb-6">WWSI <small class="text-sm">(lepszy)</small> RSS</h1>
+  <main class="max-w-[calc(100% - 2rem)] m-auto w-[670px] px-4">
+    <h1 class="mb-6 mt-16 text-center text-6xl font-bold">
+      WWSI <small class="text-sm">(lepszy)</small> RSS
+    </h1>
 
-		<p class="my-10">Uczelniany kanał RSS nie pokazuje treści komunikatu. Ten kanał ma takie informacje.</p>
+    <p class="my-10">
+      Uczelniany kanał RSS nie pokazuje treści komunikatu. Ten kanał ma takie
+      informacje.
+    </p>
 
-		<div class="my-14">
-			<h2>Link do kanału RSS:</h2>
-			<div class="my-4 p-2 font-mono max-h-[650px] overflow-x-auto rounded-lg border bg-zinc-950 flex justify-between items-center">
-				<p class="ml-1">
-					{ RSSlink }
-				</p>
+    <div class="my-14">
+      <h2>Link do kanału RSS:</h2>
+      <div
+        class="my-4 flex max-h-[650px] items-center justify-between
+               overflow-x-auto rounded-lg border bg-zinc-950 p-2 font-mono"
+      >
+        <p class="ml-1">
+          {RSSlink}
+        </p>
 
-				<button id="copy-link-btn"
-				class="inline-flex items-center justify-center whitespace-nowrap rounded-md 
-				text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1
-				 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 
-				 bg-slate-100 text-zinc-950 shadow hover:bg-slate-100/90 h-9 px-3 py-2"
-				>
-					<CopyIcon size="16" />
-				</button>
-			</div>
-		</div>
+        <button
+          id="copy-link-btn"
+          class="inline-flex h-9 items-center justify-center whitespace-nowrap rounded-md
+                 bg-slate-100 px-3 py-2 text-sm font-medium text-zinc-950 shadow
+                 transition-colors hover:bg-slate-100/90 focus-visible:outline-none
+                 focus-visible:ring focus-visible:ring-blue-500/90 focus-visible:ring-offset-2
+                 focus-visible:ring-offset-current disabled:pointer-events-none
+                 disabled:opacity-50"
+        >
+          <CopyIcon size="16" />
+        </button>
+      </div>
+    </div>
 
-		<p class="my-8">
-			Dane pobierane są ze strony uczelni co 30 minut.
-		</p>
+    <p class="my-8">Dane pobierane są ze strony uczelni co 30 minut.</p>
 
-		<footer class="my-16 text-zinc-400 text-sm text-center">
-			Autor: 
-			<a
-				class="underline underline-offset-4 hover:text-zinc-400/90"
-				href="https://github.com/mateossh"
-				rel="noopener"
-				target="_blank"
-			>
-				Mateusz Ż
-			</a>
-		</footer>
-	</main>
+    <!--
+    <p class="my-8">Jak coś przestało działać - kontakt (link do kontaktu)</p>
+
+    <p class="my-8">
+      Przydało się? <a href="#" class="underline underline-offset-4"
+        >Możesz dać na batona</a
+      >
+    </p>
+    -->
+
+    <footer class="my-16 text-center text-sm text-zinc-400">
+      Autor:
+      <a
+        class="underline underline-offset-4 hover:text-zinc-400/90"
+        href="https://github.com/mateossh"
+        rel="noopener"
+        target="_blank"
+      >
+        Mateusz Ż
+      </a>
+    </footer>
+  </main>
 </Layout>
 
 <script>
-	const button = document.querySelector('#copy-link-btn');
+  const button = document.querySelector('#copy-link-btn');
 
-	button?.addEventListener('click', ()=> {
-		navigator.clipboard.writeText(`${window.location.origin}/rss.xml`);
-	});
+  button?.addEventListener('click', () => {
+    navigator.clipboard.writeText(`${window.location.origin}/rss.xml`);
+  });
 </script>
