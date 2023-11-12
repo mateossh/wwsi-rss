@@ -1,6 +1,5 @@
 import { kv } from '@vercel/kv';
 import { JSDOM } from 'jsdom';
-import { randomBytes } from 'crypto';
 
 type FeedItem = {
   title?: string;
@@ -8,8 +7,6 @@ type FeedItem = {
   pubDate?: number | string;
   link: string;
 };
-
-export const runtime = 'edge';
 
 export async function GET() {
   const appsessid = await kv.get('cookie');
