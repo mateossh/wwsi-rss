@@ -10,6 +10,7 @@ export async function GET({ request }: APIContext) {
     title: 'WWSI - lepszy RSS',
     description: 'Komunikaty - Studencki Panel Informacyjny',
     site: 'https://student.wwsi.edu.pl/info',
+    stylesheet: '/feedstyle.xsl',
     items,
   });
 
