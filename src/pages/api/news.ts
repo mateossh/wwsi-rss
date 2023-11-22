@@ -50,7 +50,7 @@ export async function GET() {
 
   news.forEach((item, index) => {
     const title = item.querySelector('.news_title')?.textContent || '';
-    const description = item.querySelector('.news_content')?.textContent || '';
+    const description = item.querySelector('.news_content')?.innerHTML || '';
 
     const dataFromRss = schoolrssDoc.querySelector(
       `item:nth-of-type(${index + 1})`,
